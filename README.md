@@ -1,7 +1,5 @@
 # Walmart-USA---Advanced-Software-Engineering-Job-Simulation
 Walmart Advanced Software Engineering Virtual Experience (Forage) Solutions to real-world software engineering tasks including custom data structures in Java, system design using UML/ERD, and a Python ETL pipeline to integrate multi-source shipping data into a centralized database.
-# Walmart Advanced Software Engineering Virtual Experience (Forage)
-
 This repository contains my solutions for the Walmart USA Advanced Software Engineering Virtual Experience Program hosted on Forage. The program simulated real-world engineering problems across backend development, system design, algorithms, and data engineering.
 
 ---
