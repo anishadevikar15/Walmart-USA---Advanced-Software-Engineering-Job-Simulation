@@ -58,7 +58,4 @@ During this experience, I worked on multiple technical tasks that reflect real i
 - Writing production-style backend scripts  
 - Translating business requirements into technical solutions  
 ---
-## 🔹 Certificate
-Completed as part of the Walmart USA Advanced Software Engineering Virtual Experience Program on Forage.
----
-⭐ This repository showcases my ability to design, implement, and integrate software systems across multiple layers of the stack.
+This repository showcases my ability to design, implement, and integrate software systems across multiple layers of the stack.
