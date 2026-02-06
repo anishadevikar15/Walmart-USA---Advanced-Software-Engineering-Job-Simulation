@@ -1,0 +1,107 @@
+@startuml
+title Dynamic Data Processor - UML Diagram (Task 2)
+
+' =========================
+' ENUMS
+' =========================
+enum ModeIdentifier {
+  DUMP
+  PASSTHROUGH
+  VALIDATE
+}
+
+enum DatabaseIdentifier {
+  POSTGRES
+  REDIS
+  ELASTIC
+}
+
+' =========================
+' DATA OBJECTS
+' =========================
+class DataPoint {
+  - payload
+  + DataPoint()
+  + get(key)
+  + put(key, value)
+}
+
+class ProcessingResult {
+  - success
+  - message
+  + ProcessingResult(success, message)
+  + isSuccess()
+  + getMessage()
+}
+
+' =========================
+' DATABASE CONNECTOR
+' =========================
+interface IDatabaseConnector {
+  + connect()
+  + disconnect()
+  + insert(dp : DataPoint)
+  + validate(dp : DataPoint)
+  + connectorName()
+}
+
+class PostgresConnector
+class RedisConnector
+class ElasticConnector
+
+IDatabaseConnector <|.. PostgresConnector
+IDatabaseConnector <|.. RedisConnector
+IDatabaseConnector <|.. ElasticConnector
+
+' =========================
+' DATABASE FACTORY
+' =========================
+interface IDatabaseConnectorFactory {
+  + createConnector(dbId : DatabaseIdentifier)
+}
+
+class DatabaseConnectorFactory {
+  + createConnector(dbId : DatabaseIdentifier)
+}
+
+IDatabaseConnectorFactory <|.. DatabaseConnectorFactory
+DatabaseConnectorFactory ..> IDatabaseConnector : creates
+
+' =========================
+' PROCESSING MODE
+' =========================
+interface IProcessingMode {
+  + process(dp : DataPoint, connector : IDatabaseConnector)
+  + name()
+}
+
+class DumpMode
+class PassthroughMode
+class ValidateMode
+
+IProcessingMode <|.. DumpMode
+IProcessingMode <|.. PassthroughMode
+IProcessingMode <|.. ValidateMode
+
+' =========================
+' CORE PROCESSOR
+' =========================
+class DataProcessor {
+  - connectorFactory
+  - connector
+  - mode
+  + configure(modeId : ModeIdentifier, dbId : DatabaseIdentifier)
+  + process(dp : DataPoint)
+  + shutdown()
+}
+
+' =========================
+' RELATIONSHIPS
+' =========================
+DataProcessor --> IProcessingMode : uses
+DataProcessor --> IDatabaseConnector : uses
+DataProcessor --> IDatabaseConnectorFactory : uses
+DataProcessor ..> ModeIdentifier : configure with
+DataProcessor ..> DatabaseIdentifier : configure with
+
+@enduml
